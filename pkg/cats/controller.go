@@ -9,15 +9,15 @@ type handler struct {
 	DB *gorm.DB
 }
 
-func RegisterRoutes(r *gin.Engine, db *gorm.DB) {
+func RegisterCatRoutes(r *gin.Engine, db *gorm.DB) {
 	h := &handler{
 		DB: db,
 	}
 
-	routes := r.Group("/cats")
-	routes.POST("/", h.AddCat)
-	routes.GET("/", h.GetCats)
-	routes.GET("/:id", h.GetCat)
-	routes.PUT("/:id", h.UpdateCat)
-	routes.DELETE("/:id", h.DeleteCat)
+	catRoutes := r.Group("/cats")
+	catRoutes.POST("/", h.AddCat)
+	catRoutes.GET("/", h.GetCats)
+	catRoutes.GET("/:id", h.GetCat)
+	catRoutes.PUT("/:id", h.UpdateCat)
+	catRoutes.DELETE("/:id", h.DeleteCat)
 }

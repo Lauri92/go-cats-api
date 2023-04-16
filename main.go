@@ -5,6 +5,7 @@ import (
 	"github.com/Lauri92/go-cats-api/pkg/common/db"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
+	"log"
 )
 
 func main() {
@@ -17,8 +18,10 @@ func main() {
 	r := gin.Default()
 	h := db.Init(dbUrl)
 
-	cats.RegisterRoutes(r, h)
-	// register more routes here
+	cats.RegisterCatRoutes(r, h)
 
-	r.Run(port)
+	err := r.Run(port)
+	if err != nil {
+		log.Fatal("Failed to start server: ", err)
+	}
 }

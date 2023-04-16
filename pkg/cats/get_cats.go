@@ -10,7 +10,9 @@ import (
 func (h handler) GetCats(c *gin.Context) {
 	var cats []models.Cat
 
-	if result := h.DB.Find(&cats); result.Error != nil {
+	result := h.DB.Find(&cats)
+
+	if result.Error != nil {
 		c.AbortWithError(http.StatusNotFound, result.Error)
 		return
 	}

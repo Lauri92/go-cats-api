@@ -12,8 +12,9 @@ func (h handler) GetCat(c *gin.Context) {
 
 	var cat models.Cat
 
-	if result := h.DB.First(&cat, id); result.Error != nil {
-		c.AbortWithError(http.StatusNotFound, result.Error)
+	result := h.DB.First(&cat, id)
+	if result.Error != nil {
+		c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"message": result.Error.Error()})
 		return
 	}
 

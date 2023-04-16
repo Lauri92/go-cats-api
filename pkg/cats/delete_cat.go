@@ -12,7 +12,8 @@ func (h handler) DeleteCat(c *gin.Context) {
 
 	var cat models.Cat
 
-	if result := h.DB.First(&cat, id); result.Error != nil {
+	result := h.DB.First(&cat, id)
+	if result.Error != nil {
 		c.AbortWithError(http.StatusNotFound, result.Error)
 		return
 	}

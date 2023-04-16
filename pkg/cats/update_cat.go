@@ -18,14 +18,16 @@ func (h handler) UpdateCat(c *gin.Context) {
 	body := UpdateCatRequestBody{}
 
 	// getting request's body
-	if err := c.BindJSON(&body); err != nil {
+	err := c.BindJSON(&body)
+	if err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
 
 	var cat models.Cat
 
-	if result := h.DB.First(&cat, id); result.Error != nil {
+	result := h.DB.First(&cat, id)
+	if result.Error != nil {
 		c.AbortWithError(http.StatusNotFound, result.Error)
 		return
 	}

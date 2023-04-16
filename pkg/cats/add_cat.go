@@ -17,7 +17,8 @@ func (h handler) AddCat(c *gin.Context) {
 	body := AddCatRequestBody{}
 
 	// getting request's body
-	if err := c.BindJSON(&body); err != nil {
+	err := c.BindJSON(&body)
+	if err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
@@ -28,7 +29,8 @@ func (h handler) AddCat(c *gin.Context) {
 	cat.Age = body.Age
 	cat.Description = body.Description
 
-	if result := h.DB.Create(&cat); result.Error != nil {
+	result := h.DB.Create(&cat)
+	if result.Error != nil {
 		c.AbortWithError(http.StatusNotFound, result.Error)
 		return
 	}
